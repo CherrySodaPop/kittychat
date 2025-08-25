@@ -19,6 +19,3 @@ else:
     server = core.server.server()
     server.start(KC_SETTINGS_PATH)
     server.main()
-
-    core.wawalog.log(KC_END)
-    server.stop()
