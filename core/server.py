@@ -25,12 +25,20 @@ CLIENT_SOCKET:int = 0
 CLIENT_THREAD:int = 1
 CLIENT_STOP_EVENT:int = 2
 
+USER_ID_INVALID:int = -1
+
+class active_client_data:
+    def __init__(self) -> None:
+        self.user_id = USER_ID_INVALID
+
 class server:
     def __init__(self) -> None:
         self.instance: socket.socket = None
         self.connection_request_thread: threading.Thread = None
-        self.clients: array = [] # (socket, thread, stop_event)
         self.settings: dict = {}
+
+        self.clients: array = [] # (socket, thread, stop_event, active_client_data)
+        self.active_chunks: dict = {} # the current chunk of messages, will be saved after a threshold of messages are sent and the chunk reset
 
     def update_server_settings(self, settings_path: str) -> None:
         _read_ = open(settings_path, "r")
@@ -93,32 +101,80 @@ class server:
                 _socket_, _address_ = self.instance.accept()
 
                 # got one
+                _active_client_data_ = active_client_data()
                 _e_ = threading.Event()
-                _t_ = threading.Thread(target=self.user_thread, args=[_e_, _socket_, _address_])
+                _t_ = threading.Thread(target=self.user_thread, args=[_e_, _socket_, _address_, _active_client_data_])
                 _t_.start()
-                self.clients.append()
+                _client_ = (_socket_, _t_, _e_, _active_client_data_)
+                self.clients.append(_client_)
 
-                core.wawalog.log(KC_SERVER_CONNECTION_STARTED)
+                core.wawalog.log(KC_SERVER_CONNECTION_STARTED % _socket_)
             except:
                 pass
     
-    def user_thread(self, event: threading.Event, socket: socket.socket, address:str) -> None:
+    def user_thread(self, event: threading.Event, socket: socket.socket, address:str, cli_data:active_client_data) -> None:
         while not event.is_set():
             try:
                 _m_: tuple = socket.recv(core.packets.PACKET_SIZE_LIMIT)
                 _id_: int = _message_[core.packets.PACKET_ID]
                 _b_data_: bytes = _message_[core.packets.PACKET_BYTE_DATA]
                 _data_: tuple = core.packets.unpack(_id_, _b_data_)
+                self.handle_data(socket, cli_data, _id_, _data_)
             except:
                 pass
-    
+     
     def disconnect_client(self, client: tuple) -> None:
        client[CLIENT_SOCKET].close()
        client[CLIENT_STOP_EVENT].set()
        self.clients.remove(client)
     
-    def send_info(self, client_socket: socket.socket, data:bytes) -> None:
+    def send_info(self, socket: socket.socket, data:bytes) -> None:
         if len(info) > core.packets.PACKET_SIZE_LIMIT:
             core.wawalog.log(KC_SERVER_PACKET_TOO_BIG)
             return
-        client_socket.send(data)
+        socket.send(data)
+    
+    def handle_data(self, socket: socket.socket, cli_data: active_client_data, id: int, data: tuple) -> None:
+        match id:
+            case core.packets.P_ID_CONFIRMED:
+                pass
+            case core.packets.P_ID_LOGIN:
+                pass
+            case core.packets.P_ID_REGISTER:
+                pass
+            case core.packets.P_ID_SERVER_SHUTDOWN:
+                pass
+            case core.packets.P_ID_DISCONNECTED:
+                pass
+            case _:
+                pass
+        pass
+
+    def message_read(self, cli_data:active_client_data, data: tuple) -> None:
+        # user is not logged in!
+        if cli_data.user_id == USER_ID_INVALID: return
+
+    def make_active_chunk(self, room_name: str) -> dict:
+        return
+        {
+            room_name :
+            {
+                "messages" :
+                [
+                    ### EXAMPLE MESSAGE ###
+                    #{
+                        #"user" :
+                        #"date" :
+                    #}
+                ]
+            }
+        }
+    
+    def save_active_chunk(self, room_name: str) -> None:
+        chunk_path: str = "data/rooms/%s/%s.meow"
+        open()
+        pass
+
+    def get_current_chunk_index() -> int:
+
+        pass

@@ -13,6 +13,8 @@ So this little project was born!
 # Goals
 
 ## Coming Soon!
+- Profile Pictures
+- User-set RPG text effect/sound
 - E2E Encryption
 - Image upload
 - Site link embedding

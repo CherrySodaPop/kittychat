@@ -13,27 +13,36 @@ PACKET_DEF_START: str = PACKET_DEF_ENDIAN + PACKET_DEF_IDSIZE
 PACKET_DEF_STRING: str = CHARACTER_LIMIT * "cccc"
 PACKET_SIZE_LIMIT: int = (CHARACTER_LIMIT * 4) + 8 # 4104 bytes
 
-_KC_PACKET_COUNT_: int = -1
-def _reg_packet_id_() -> int:
-    global _KC_PACKET_COUNT_
-    _KC_PACKET_COUNT_ = _KC_PACKET_COUNT_ + 1
-    return _KC_PACKET_COUNT_
+###### PACKET DEF START ######
 
-P_CONFIRMED:tuple       = (_reg_packet_id_(), PACKET_DEF_START)
-P_LOGIN:tuple           = (_reg_packet_id_(), PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING)                     # username, password
-P_REGISTER:tuple        = (_reg_packet_id_(), PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING + PACKET_DEF_STRING) # username, password, registration password
-P_MESSAGE:tuple         = (_reg_packet_id_(), PACKET_DEF_START + PACKET_DEF_STRING)                                         # message
-P_SERVER_SHUTDOWN:tuple = (_reg_packet_id_(), PACKET_DEF_START)
-P_DISCONNECTED:tuple    = (_reg_packet_id_(), PACKET_DEF_START)
+P_ID_CONFIRMED: int = 0
+P_CONFIRMED: tuple = (P_ID_CONFIRMED, PACKET_DEF_START + PACKET_DEF_STRING)
+
+P_ID_LOGIN: int = 1
+P_LOGIN: tuple = (P_ID_LOGIN, PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING) # username, password
+
+P_ID_REGISTER: int = 2
+P_REGISTER: tuple = (P_ID_REGISTER, PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING + PACKET_DEF_STRING) # username, password, registration password
+
+P_ID_SERVER_SHUTDOWN: int = 3
+P_SERVER_SHUTDOWN: tuple = (P_ID_SERVER_SHUTDOWN, PACKET_DEF_START)
+
+P_ID_DISCONNECTED: int = 4
+P_DISCONNECTED: tuple = (P_ID_DISCONNECTED, PACKET_DEF_START)
+
+P_ID_MESSAGE: int = 5
+P_MESSAGE: tuple = (P_ID_MESSAGE, PACKET_DEF_START + PACKET_DEF_STRING)
 
 ID_TO_PACKET = [
     P_CONFIRMED,
     P_LOGIN,
     P_REGISTER,
-    P_MESSAGE,
     P_SERVER_SHUTDOWN,
     P_DISCONNECTED,
+    P_MESSAGE,
 ]
+
+###### PACKET DEF END ######
 
 def make(packet: tuple, data: tuple) -> tuple:
     return (packet[PACKET_ID], pack(packet[PACKET_FORMAT], data))
