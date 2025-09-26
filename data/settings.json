@@ -1,8 +1,9 @@
 {
-    "server_name" : "My Kitty Chat Server",
-    "account_registration" : false,
-    "account_registration_password" : "meow_pleasechangeme_meow",
-    "address" : "localhost",
-    "port" : 6666,
-    "max_connected_users" : 256
+    "server_name": "My Kitty Chat Server",
+    "account_registration": false,
+    "account_registration_password": "meow_pleasechangeme_meow",
+    "address": "localhost",
+    "port": 6666,
+    "max_connected_users": 2,
+    "chunk_size": 256
 }

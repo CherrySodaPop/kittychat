@@ -3,7 +3,9 @@ import socket
 
 class client:
     def __init__(self) -> None:
-        self.server_settings = {}
+        self.instance: socket.socket = None
+        self.settings: dict = {}
+        self.server_settings: dict = {}
 
-    def start(self) -> None:
+    def connect_to_server(self) -> None:
         pass

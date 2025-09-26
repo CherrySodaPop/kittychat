@@ -1,2 +1,6 @@
 __pycache__/
-data/**
+.vscode/
+
+data/rooms/**
+data/bans.json
+data/users.json
