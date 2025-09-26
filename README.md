@@ -26,3 +26,4 @@ So this little project was born!
 - Someway to "message/mail" other servers
 - Voice calling
 - Multiple server connections
+- Kill switch
