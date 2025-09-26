@@ -33,19 +33,24 @@ CLIENT_STOP_EVENT: int = 2
 USER_ID_INVALID: int = -1
 CURRENT_ROOM_INVALID: str = ""
 
+DEFAULT_PORT:int = 6666
 DEFAULT_REGISTER_PASS:str = "meow_pleasechangeme_meow"
+DEFAULT_CHUNK_SIZE:int = 256
+DEFAULT_MAX_CONNECTIONS:int = 256
 
 # room data
 PATH_TO_ROOM = "data/rooms/%s/"
 PATH_TO_ROOM_SETTINGS = "settings.json"
 PATH_TO_ROOM_CHUNKS = "data/rooms/%s/chunks/"
 CHUNK_FILE_EXTENSION = ".meow"
-NO_CHUNK_DATA = {}
+NO_CHUNK_DATA = ["no_chunk_data"]
 
 # server data
 DATA_PATH = "data/"
-SETTINGS_PATH = DATA_PATH + "settings.json"
-USERS_PATH = DATA_PATH + "users.json"
+SETTINGS_FILE = "settings.json"
+USERS_FILE = "users.json"
+SETTINGS_PATH = DATA_PATH + SETTINGS_FILE
+USERS_PATH = DATA_PATH + USERS_FILE
 
 class active_client_data:
     def __init__(self) -> None:
@@ -73,9 +78,9 @@ class server:
         self.settings["account_registration"] = _info_.get("account_registration", False)
         self.settings["account_registration_password"] = _info_.get("account_registration_password", DEFAULT_REGISTER_PASS) # TODO: make it use a random default password
         self.settings["address"] = _info_.get("address", "localhost")
-        self.settings["port"] = _info_.get("port", 6666) # i did want 666 as a port as a reference to doom and funny satanic number but it requires admin perms for ports that low...
-        self.settings["max_connected_users"] = _info_.get("max_connected_users", 256)
-        self.settings["chunk_size"] = _info_.get("chunk_size", 256)
+        self.settings["port"] = _info_.get("port", DEFAULT_PORT) # i did want 666 as a port as a reference to doom and funny satanic number but it requires admin perms for ports that low...
+        self.settings["max_connections"] = _info_.get("max_connections", DEFAULT_MAX_CONNECTIONS)
+        self.settings["chunk_size"] = _info_.get("chunk_size", DEFAULT_CHUNK_SIZE)
 
     def save_server_settings(self) -> None:
         self.save_file("data/", "settings.json", self.settings)
@@ -93,7 +98,7 @@ class server:
 
         try:
             self.instance.bind((self.settings["address"], self.settings["port"]))
-            self.instance.listen(self.settings["max_connected_users"])
+            self.instance.listen(self.settings["max_connections"])
             core.wawalog.log(KC_SERVER_START)
         except:
             core.wawalog.error(KC_SERVER_FAIL)
@@ -180,11 +185,11 @@ class server:
             case core.packets.P_ID_CONFIRMED:
                 pass
             case core.packets.P_ID_LOGIN:
-                pass
+                self.incoming_data_handle_login(cli_data, data[0], data[1])
             case core.packets.P_ID_REGISTER:
                 self.register_user(data[0], data[1], data[2])
             case core.packets.P_ID_MESSAGE:
-                self.handle_message(cli_data, data[0])
+                self.incoming_data_handle_message(cli_data, data[0])
             case core.packets.P_GOTO_ROOM:
                 pass
             case _:
@@ -193,28 +198,25 @@ class server:
 
     # ========== Incoming Data Cases ==========
 
-    # ========== Outgoing Data Cases ==========
-
-    def send_chunk_info(self, socket: socket.socket, room: str, chunk: int) -> None:
-        if socket == None: return
+    def incoming_data_handle_login(self, cli_data:active_client_data, username:str, password_hashed:str) -> None:
+        # already logged in
+        if cli_data.user_id != USER_ID_INVALID: return
         
-        _chunk_: dict = get_chunk_data(room, chunk)
-        if not _chunk_: return
+        # wrong credentials
+        if not self.are_user_credentials_correct(username, password_hashed): return
 
-        self.send_info(i.socket, packets.make(packets.P_CHUNK_INFO, (json.dumps(_chunk_))))
-
-    # =========================================
-
-    def handle_message(self, cli_data:active_client_data, message: str) -> None:
+    def incoming_data_handle_message(self, cli_data:active_client_data, message: str) -> None:
         # user is not logged in!
         if cli_data.user_id == USER_ID_INVALID: return
 
+        _target_room_: str = cli_data.current_room
+
         # user is not in a valid room!
-        if cli_data.current_room == CURRENT_ROOM_INVALID: return
-        if not self.rooms.has(cli_data.current_room): return
+        if _target_room_ == CURRENT_ROOM_INVALID: return
+        if not self.rooms.has(_target_room_): return
 
         # this room is missing the messages portion???
-        #if not self.room[cli_data.current_room].has("messages"): return
+        #if not self.room[_target_room_].has("messages"): return
 
         _message_data_ = {
             "user" : cli_data.user_id,
@@ -222,7 +224,23 @@ class server:
             "message" : message,
             "is_encrypted" : False,
         }
-        self.rooms[cli_data.current_room]["messages"].append(_message_data_)
+        self.rooms[_target_room_]["messages"].append(_message_data_)
+
+        # chunk size has been reached, save the chunk to disk
+        if self.rooms[_target_room_]["messages"].size() > self.settings.get("chunk_size", DEFAULT_CHUNK_SIZE):
+            self.save_active_chunk(i, self.get_current_chunk_index(i))
+
+    # ========== Outgoing Data Cases ==========
+
+    def outgoing_data_send_chunk_info(self, socket: socket.socket, room: str, chunk: int) -> None:
+        if socket == None: return
+        
+        _chunk_: dict = get_chunk_data(room, chunk)
+        if _chunk_ == NO_CHUNK_DATA: return
+
+        self.send_info(i.socket, packets.make(packets.P_CHUNK_INFO, (json.dumps(_chunk_))))
+
+    # =========================================
 
     def register_user(self, username: str, password_hashed: str, register_pass_hashed: str) -> bool:
         if self.settings.get("account_registration", False): return
@@ -236,18 +254,31 @@ class server:
         _register_pass_hash_: str = hashlib.sha512(_register_pass_string_.encode()).hexdigest()
         if _register_pass_hash_ != register_pass_hashed: return 
 
+        _user_data_: dict = self.get_all_user_data()
+
+        _user_data_[username] = {
+            "password_hashed" : password_hashed,
+        }
+
+        self.save_file(DATA_PATH, USERS_FILE, _user_data_)
+    
+    def are_user_credentials_correct(self, username: str, password_hashed: str) -> bool:
+        if len(username) > 64 or len(password_hashed) != 128: return False
+
+        _user_data_: dict = self.get_all_user_data()
+
+        if not _user_data_.has(username): return False
+        
+        return _user_data_[username]["password_hashed"] == password_hashed
+
+    def get_all_user_data(self) -> dict:
         _user_data_: dict = {}
         if os.path.isfile(USERS_PATH):
             _user_data_file_ = open(USERS_PATH, "r")
             _user_data_string_data_:str = _chunk_file_.read()
             _user_data_file_.close()
             _user_data_ = json.loads(_user_data_string_data_)
-        
-        if _user_data_.has(username): return
-
-        _user_data_[username] = {
-            "password_hashed" : password_hashed,
-        }
+        return _user_data_
 
     def create_room(self, room_name: str) -> None:
         if self.rooms.has(room_name): return
@@ -261,13 +292,13 @@ class server:
 
     def save_rooms(self) -> None:
         for i in self.rooms.keys():
-            self.save_active_chunk(i, self.get_current_chunk_indexse(i))
+            self.save_active_chunk(i, self.get_current_chunk_index(i))
             self.save_room_settings()
 
     def save_room_settings(self, room_name: str) -> None:
         self.save_file(PATH_TO_ROOM % room_name, PATH_TO_ROOM_SETTINGS, self.rooms[room_name]["settings"])
 
-    def get_chunk_data(self, room_name: str, chunk: int) -> dict:
+    def get_chunk_data(self, room_name: str, chunk: int) -> array:
         # check active chunk
         if self.rooms.has(room_name) and self.get_current_chunk_index(room_name) == chunk:
             return self.rooms[room_name]["messages"]
@@ -284,10 +315,10 @@ class server:
 
         _data_ = json.loads(str(_string_data_))
 
-        if type(_data_) is dict: return NO_CHUNK_DATA
+        if type(_data_) is not array: return NO_CHUNK_DATA
 
         return _data_
-    
+
     def save_active_chunk(self, room_name: str) -> None:
         if not self.rooms.has(room_name): return
 
@@ -295,7 +326,8 @@ class server:
         _chunk_file_name_ = str(self.get_current_chunk_index()) + CHUNK_FILE_EXTENSION
         _chunk_file_path_ = _chunks_path_ + _chunk_file_name_
 
-        self.save_file(_chunks_path_, _chunk_file_path_, self.rooms[room_name])
+        self.save_file(_chunks_path_, _chunk_file_path_, self.rooms[room_name]["messages"])
+        self.rooms[room_name]["messages"] = []
 
     def get_current_chunk_index(self, room_name: str) -> int:
         _room_path_ = PATH_TO_ROOM % [room_name]
