@@ -8,6 +8,7 @@ import threading
 import sys
 import time
 import hashlib
+import array
 
 KC_SERVER_STARTING: str = "Kitty Chat server %s is starting!"
 KC_SERVER_INFO: str = "Hosting: %s, %s"

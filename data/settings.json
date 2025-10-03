@@ -4,6 +4,6 @@
     "account_registration_password": "meow_pleasechangeme_meow",
     "address": "localhost",
     "port": 6666,
-    "max_connected_users": 2,
+    "max_connections": 256,
     "chunk_size": 256
 }

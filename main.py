@@ -1,3 +1,4 @@
+import core.client
 import core.server
 import core.wawalog
 import sys
@@ -9,7 +10,9 @@ for i in sys.argv:
     sys_param.append(i)
 
 if "--client" in sys_param:
-    pass
+    client = core.client.client()
+    client.start()
+    client.main()
 else:
     server = core.server.server()
     server.start()
