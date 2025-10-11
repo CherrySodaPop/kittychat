@@ -4,3 +4,9 @@ __pycache__/
 data/rooms/**
 data/bans.json
 data/users.json
+
+# Godot-specific ignores
+.godot/
+.import/
+export.cfg
+export_presets.cfg

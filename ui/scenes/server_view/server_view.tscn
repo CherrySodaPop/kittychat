@@ -1,0 +1,129 @@
+[gd_scene load_steps=5 format=3 uid="uid://b06c2fuh0eftm"]
+
+[ext_resource type="Script" uid="uid://p7pqf1f2xg0n" path="res://scenes/server_view/server_view.gd" id="1_hiuts"]
+[ext_resource type="Texture2D" uid="uid://cdqddr2uxjqlc" path="res://assets/themes/aero/textures/tex_profile_background.png" id="2_culhu"]
+[ext_resource type="Texture2D" uid="uid://di24t6gcd48s3" path="res://assets/themes/aero/textures/tex_status_online.png" id="3_sx757"]
+[ext_resource type="PackedScene" uid="uid://elvcm3awfulx" path="res://scenes/components/button_rich/button_rich.tscn" id="4_1xd16"]
+
+[node name="ServerView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hiuts")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopImage" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 71.0
+grow_horizontal = 2
+theme_type_variation = &"ConnectToServerTopImage"
+
+[node name="ProfilePicture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = 87.0
+offset_bottom = 85.0
+texture = ExtResource("2_culhu")
+expand_mode = 1
+
+[node name="UsernameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 26.0
+offset_right = 276.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 18
+text = "Username"
+
+[node name="StatusIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 54.0
+offset_right = 109.0
+offset_bottom = 72.0
+texture = ExtResource("3_sx757")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 53.0
+offset_right = 235.0
+offset_bottom = 70.0
+
+[node name="StatusLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Offline"
+
+[node name="StatusLabel2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="DiaryLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "\"Feeling gay!\""
+
+[node name="Seperator" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -141.0
+offset_top = 94.0
+offset_right = 141.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_type_variation = &"SeperatorPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 11.0
+offset_top = 105.0
+offset_right = -11.0
+offset_bottom = 301.0
+grow_horizontal = 2
+
+[node name="ButtonRich" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"
+
+[node name="ButtonRich2" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"
+
+[node name="ButtonRich3" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"
+
+[node name="ButtonRich4" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"
+
+[node name="ButtonRich5" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"
+
+[node name="ButtonRich6" parent="VBoxContainer" instance=ExtResource("4_1xd16")]
+layout_mode = 2
+theme_type_variation = &"ButtonWithNoDefault"
+text = "Room Name 0 - [color=dark_gray]12:00PM"

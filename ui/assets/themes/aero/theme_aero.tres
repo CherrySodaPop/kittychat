@@ -1,0 +1,174 @@
+[gd_resource type="Theme" load_steps=29 format=3 uid="uid://6wpqp8vo711g"]
+
+[ext_resource type="FontFile" uid="uid://cifcysnyiesbt" path="res://assets/themes/aero/font_segoeui.ttf" id="1_cu125"]
+[ext_resource type="Texture2D" uid="uid://befek7wru7vva" path="res://assets/themes/aero/textures/tex_button_disabled.png" id="1_hry11"]
+[ext_resource type="Texture2D" uid="uid://cniqi0iajsihq" path="res://assets/themes/aero/textures/tex_button_normal.png" id="1_rs2eo"]
+[ext_resource type="Texture2D" uid="uid://c0eoxdq6huilp" path="res://assets/themes/aero/textures/tex_connect_to_server_top.png" id="1_utetb"]
+[ext_resource type="Texture2D" uid="uid://cwsg4wv3jfysh" path="res://assets/themes/aero/textures/tex_button_hover.png" id="2_7mwxr"]
+[ext_resource type="Texture2D" uid="uid://cigie28unv4lp" path="res://assets/themes/aero/textures/tex_button_pressed.png" id="4_52jvp"]
+[ext_resource type="Texture2D" uid="uid://de36ro8jv2mx0" path="res://assets/themes/aero/textures/tex_text_highlight.png" id="5_db83u"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7mwxr"]
+texture = ExtResource("1_hry11")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hry11"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_52jvp"]
+texture = ExtResource("2_7mwxr")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hry11"]
+texture = ExtResource("1_rs2eo")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(0, 0, 107, 23)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_db83u"]
+texture = ExtResource("4_52jvp")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_52jvp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_db83u"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vp8rr"]
+texture = ExtResource("5_db83u")
+region_rect = Rect2(1, 0, 105, 22)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iw4jy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7xhqk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vp8rr"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="Gradient" id="Gradient_ievws"]
+colors = PackedColorArray(0.19999999, 0.6, 1, 0.39215687, 0.19999999, 0.6, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n0fk5"]
+gradient = SubResource("Gradient_ievws")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hatx7"]
+texture = SubResource("GradientTexture2D_n0fk5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rs2eo"]
+texture = ExtResource("1_utetb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hatx7"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.7083334, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+expand_margin_left = 6.0
+expand_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0fk5"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+expand_margin_left = 6.0
+expand_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ievws"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_db83u"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.5, 0.5, 0.5, 0, 0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vp8rr"]
+gradient = SubResource("Gradient_db83u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iw4jy"]
+texture = SubResource("GradientTexture2D_vp8rr")
+
+[resource]
+default_font = ExtResource("1_cu125")
+default_font_size = 12
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 0.5019608)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/disabled = SubResource("StyleBoxTexture_7mwxr")
+Button/styles/focus = SubResource("StyleBoxEmpty_hry11")
+Button/styles/hover = SubResource("StyleBoxTexture_52jvp")
+Button/styles/normal = SubResource("StyleBoxTexture_hry11")
+Button/styles/pressed = SubResource("StyleBoxTexture_db83u")
+ButtonTextOnly/base_type = &"Button"
+ButtonTextOnly/colors/font_color = Color(0, 0.5, 1, 1)
+ButtonTextOnly/colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
+ButtonTextOnly/colors/font_focus_color = Color(0, 0.5019608, 1, 1)
+ButtonTextOnly/colors/font_hover_color = Color(0.14999998, 0.575, 1, 1)
+ButtonTextOnly/colors/font_pressed_color = Color(0, 0.5019608, 1, 1)
+ButtonTextOnly/styles/disabled = SubResource("StyleBoxEmpty_52jvp")
+ButtonTextOnly/styles/focus = SubResource("StyleBoxEmpty_db83u")
+ButtonTextOnly/styles/hover = SubResource("StyleBoxTexture_vp8rr")
+ButtonTextOnly/styles/normal = SubResource("StyleBoxEmpty_iw4jy")
+ButtonTextOnly/styles/pressed = SubResource("StyleBoxEmpty_7xhqk")
+ButtonWithNoDefault/base_type = &"Button"
+ButtonWithNoDefault/styles/normal = SubResource("StyleBoxEmpty_vp8rr")
+ConnectToServerBottomImage/base_type = &"PanelContainer"
+ConnectToServerBottomImage/styles/panel = SubResource("StyleBoxTexture_hatx7")
+ConnectToServerTopImage/base_type = &"PanelContainer"
+ConnectToServerTopImage/styles/panel = SubResource("StyleBoxTexture_rs2eo")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.05882353)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/clear_button_color = Color(0.12, 0.12, 0.12, 1)
+LineEdit/colors/clear_button_color_pressed = Color(0, 0, 0, 1)
+LineEdit/colors/font_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_outline_color = Color(1, 1, 1, 1)
+LineEdit/colors/font_placeholder_color = Color(0.22, 0.22, 0.22, 0.6)
+LineEdit/colors/font_selected_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_uneditable_color = Color(0.22, 0.22, 0.22, 0.5019608)
+LineEdit/colors/selection_color = Color(0, 0.5, 1, 1)
+LineEdit/styles/focus = SubResource("StyleBoxFlat_hatx7")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_n0fk5")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ievws")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 1)
+RichTextLabel/colors/font_selected_color = Color(1, 1, 1, 0)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+RichTextLabel/colors/selection_color = Color(0.19999999, 0.6, 1, 0.8)
+RichTextLabel/colors/table_border = Color(0, 0, 0, 0)
+RichTextLabel/colors/table_even_row_bg = Color(0, 0, 0, 0)
+RichTextLabel/colors/table_odd_row_bg = Color(0, 0, 0, 0)
+SeperatorPanel/base_type = &"Panel"
+SeperatorPanel/styles/panel = SubResource("StyleBoxTexture_iw4jy")

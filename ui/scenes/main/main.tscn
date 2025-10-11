@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxbh8aifcttle"]
+
+[ext_resource type="PackedScene" uid="uid://djtb3y7rprjt7" path="res://scenes/connect_to_server/connect_to_server.tscn" id="1_hyk8p"]
+[ext_resource type="PackedScene" uid="uid://b06c2fuh0eftm" path="res://scenes/server_view/server_view.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://b37akg25c257s" path="res://scenes/room_view/room_view.tscn" id="3_k2fmo"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConnectToServer" parent="." instance=ExtResource("1_hyk8p")]
+layout_mode = 1
+
+[node name="ServerView" parent="." instance=ExtResource("2_iuonh")]
+visible = false
+layout_mode = 1
+
+[node name="RoomView" parent="." instance=ExtResource("3_k2fmo")]
+visible = false

@@ -1,0 +1,146 @@
+[gd_scene load_steps=2 format=3 uid="uid://djtb3y7rprjt7"]
+
+[ext_resource type="Script" uid="uid://c5syibj8ub6ix" path="res://scenes/connect_to_server/connect_to_server.gd" id="1_hodfy"]
+
+[node name="ConnectToServer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hodfy")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BottomImage" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -134.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"ConnectToServerBottomImage"
+
+[node name="TopImage" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 71.0
+grow_horizontal = 2
+theme_type_variation = &"ConnectToServerTopImage"
+
+[node name="Welcome" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -141.0
+offset_right = 92.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Welcome to KittyChat!
+Connect to a server to get started!"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Address" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -60.0
+offset_right = 92.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Address"
+
+[node name="AddressInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -42.625
+offset_right = 100.0
+offset_bottom = -17.625
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "192.168.xxx.xxx"
+
+[node name="Port" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -15.0
+offset_right = 92.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Port"
+
+[node name="PortInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 2.375
+offset_right = 100.0
+offset_bottom = 27.375
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "8008"
+
+[node name="ConnectButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 71.0
+offset_right = 40.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Connect"
+
+[node name="AboutButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -33.0
+offset_right = 46.0
+offset_bottom = -12.0
+grow_vertical = 0
+theme_type_variation = &"ButtonTextOnly"
+text = "About"
