@@ -39,6 +39,8 @@ DEFAULT_REGISTER_PASS:str = "meow_pleasechangeme_meow"
 DEFAULT_CHUNK_SIZE:int = 256
 DEFAULT_MAX_CONNECTIONS:int = 256
 
+MAX_CHARACTER_LENGTH:int = 18
+
 # room data
 PATH_TO_ROOM = "data/rooms/%s/"
 PATH_TO_ROOM_SETTINGS = "settings.json"
@@ -246,7 +248,7 @@ class server:
     def register_user(self, username: str, password_hashed: str, register_pass_hashed: str) -> bool:
         if self.settings.get("account_registration", False): return
 
-        if (len(username) > 64 or
+        if (len(username) > MAX_CHARACTER_LENGTH or
             len(password_hashed) != 128 or
             len(register_pass_hashed) != 128):
             return
@@ -264,7 +266,7 @@ class server:
         self.save_file(DATA_PATH, USERS_FILE, _user_data_)
     
     def are_user_credentials_correct(self, username: str, password_hashed: str) -> bool:
-        if len(username) > 64 or len(password_hashed) != 128: return False
+        if len(username) > MAX_CHARACTER_LENGTH or len(password_hashed) != 128: return False
 
         _user_data_: dict = self.get_all_user_data()
 
