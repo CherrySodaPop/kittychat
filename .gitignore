@@ -10,3 +10,5 @@ data/users.json
 .import/
 export.cfg
 export_presets.cfg
+
+ui/addons/py4godot/**
