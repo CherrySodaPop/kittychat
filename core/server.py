@@ -69,7 +69,7 @@ class server:
         self.clients: array = [] # (socket, thread, stop_event, active_client_data)
         self.rooms: dict = {} # the current chunk of messages, will be saved after a threshold of messages are sent and the chunk reset
 
-    def update_server_settings(self) -> None:
+    def update_settings(self) -> None:
         _info_: dict = {}
         
         if os.path.isdir(DATA_PATH):
@@ -91,7 +91,7 @@ class server:
     def start(self) -> None:
         core.wawalog.log(KC_SERVER_STARTING % KC_VERSION)
 
-        self.update_server_settings()
+        self.update_settings()
 
         core.wawalog.log(KC_SERVER_INFO % (self.settings["server_name"], "%s:%s" % (self.settings["address"], self.settings["port"]) ))
 
@@ -241,7 +241,24 @@ class server:
         _chunk_: dict = get_chunk_data(room, chunk)
         if _chunk_ == NO_CHUNK_DATA: return
 
-        self.send_info(i.socket, packets.make(packets.P_CHUNK_INFO, (json.dumps(_chunk_))))
+        self.send_info(socket, packets.make(packets.P_CHUNK_INFO,
+                (
+                    room,
+                    chunk,
+                    json.dumps(_chunk_))
+            )
+        )
+    
+    def outgoing_data_send_server_settings(self, socket: socket.socket) -> None:
+        if socket == None: return
+
+        self.send_info(socket, packets.make(packets.P_SERVER_SETTINGS,
+                (
+                    self.settings.get("server_name", "My Kitty Chat Server"),
+                    self.settings.get("account_registration", False)
+                )
+            )
+        )
 
     # =========================================
 
