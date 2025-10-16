@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://6wpqp8vo711g"]
+[gd_resource type="Theme" load_steps=42 format=3 uid="uid://6wpqp8vo711g"]
 
 [ext_resource type="FontFile" uid="uid://cifcysnyiesbt" path="res://assets/themes/aero/font_segoeui.ttf" id="1_cu125"]
 [ext_resource type="Texture2D" uid="uid://befek7wru7vva" path="res://assets/themes/aero/textures/tex_button_disabled.png" id="1_hry11"]
@@ -7,6 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://cwsg4wv3jfysh" path="res://assets/themes/aero/textures/tex_button_hover.png" id="2_7mwxr"]
 [ext_resource type="Texture2D" uid="uid://cigie28unv4lp" path="res://assets/themes/aero/textures/tex_button_pressed.png" id="4_52jvp"]
 [ext_resource type="Texture2D" uid="uid://de36ro8jv2mx0" path="res://assets/themes/aero/textures/tex_text_highlight.png" id="5_db83u"]
+[ext_resource type="Texture2D" uid="uid://sajy4t78v0wb" path="res://assets/themes/aero/textures/tex_scroll_arrow.png" id="7_sus26"]
+[ext_resource type="Texture2D" uid="uid://so5t86ns130e" path="res://assets/themes/aero/textures/tex_scroll_bar.png" id="7_vp8rr"]
+[ext_resource type="Texture2D" uid="uid://hy76ar1jea0o" path="res://assets/themes/aero/textures/tex_scroll_bar_highlight.png" id="8_7xhqk"]
+[ext_resource type="Texture2D" uid="uid://dxwf8e6ib45q4" path="res://assets/themes/aero/textures/tex_scroll_arrow_highlight.png" id="8_twxnn"]
+[ext_resource type="Texture2D" uid="uid://bdvjjoj0bmyw7" path="res://assets/themes/aero/textures/tex_scroll_bar_pressed.png" id="9_bq12r"]
+[ext_resource type="Texture2D" uid="uid://e7w5lg254gpq" path="res://assets/themes/aero/textures/tex_scroll_arrow_pressed.png" id="9_j8nrq"]
+[ext_resource type="Texture2D" uid="uid://dh6vsads1t8ka" path="res://assets/themes/aero/textures/tex_scroll_arrow_down.png" id="10_u86d0"]
+[ext_resource type="Texture2D" uid="uid://h2c8xp2h8imm" path="res://assets/themes/aero/textures/tex_scroll_arrow_down_highlight.png" id="11_jxiw6"]
+[ext_resource type="Texture2D" uid="uid://5s0oebhif0lf" path="res://assets/themes/aero/textures/tex_scroll_arrow_down_pressed.png" id="12_e7vhx"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7mwxr"]
 texture = ExtResource("1_hry11")
@@ -113,6 +122,35 @@ gradient = SubResource("Gradient_db83u")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iw4jy"]
 texture = SubResource("GradientTexture2D_vp8rr")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7xhqk"]
+texture = ExtResource("7_vp8rr")
+texture_margin_left = 3.0
+texture_margin_top = 5.0
+texture_margin_right = 3.0
+texture_margin_bottom = 5.0
+region_rect = Rect2(0, 0, 15, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i5p54"]
+texture = ExtResource("8_7xhqk")
+texture_margin_left = 3.0
+texture_margin_top = 5.0
+texture_margin_right = 3.0
+texture_margin_bottom = 5.0
+region_rect = Rect2(0, 0, 15, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_atv1a"]
+texture = ExtResource("9_bq12r")
+texture_margin_left = 3.0
+texture_margin_top = 5.0
+texture_margin_right = 3.0
+texture_margin_bottom = 5.0
+region_rect = Rect2(0, 0, 15, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vp8rr"]
+content_margin_left = 7.0
+content_margin_right = 7.0
+bg_color = Color(0.9, 0.9, 0.9, 1)
+
 [resource]
 default_font = ExtResource("1_cu125")
 default_font_size = 12
@@ -172,3 +210,13 @@ RichTextLabel/colors/table_even_row_bg = Color(0, 0, 0, 0)
 RichTextLabel/colors/table_odd_row_bg = Color(0, 0, 0, 0)
 SeperatorPanel/base_type = &"Panel"
 SeperatorPanel/styles/panel = SubResource("StyleBoxTexture_iw4jy")
+VScrollBar/icons/decrement = ExtResource("7_sus26")
+VScrollBar/icons/decrement_highlight = ExtResource("8_twxnn")
+VScrollBar/icons/decrement_pressed = ExtResource("9_j8nrq")
+VScrollBar/icons/increment = ExtResource("10_u86d0")
+VScrollBar/icons/increment_highlight = ExtResource("11_jxiw6")
+VScrollBar/icons/increment_pressed = ExtResource("12_e7vhx")
+VScrollBar/styles/grabber = SubResource("StyleBoxTexture_7xhqk")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_i5p54")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_atv1a")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_vp8rr")

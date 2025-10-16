@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xp2xfl42xifo"
-path="res://.godot/imported/tex_people.png-19acaac53fb415f994b12f178aef9baa.ctex"
+uid="uid://63vwr7jkju35"
+path="res://.godot/imported/tex_wlm16.png-77bf8ce08b32071046f04beffe48e75c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/icons/tex_people.png"
-dest_files=["res://.godot/imported/tex_people.png-19acaac53fb415f994b12f178aef9baa.ctex"]
+source_file="res://assets/themes/aero/textures/tex_wlm16.png"
+dest_files=["res://.godot/imported/tex_wlm16.png-77bf8ce08b32071046f04beffe48e75c.ctex"]
 
 [params]
 

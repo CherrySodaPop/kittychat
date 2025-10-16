@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs2ddl3gooq4l"
-path="res://.godot/imported/tex_error16.png-8c65877a212fad933bb93c20678f6cd2.ctex"
+uid="uid://dglxpyomtyjy3"
+path="res://.godot/imported/tex_office16.png-923041fe82c2e854f7fb3e01a1c47e1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/icons/tex_error16.png"
-dest_files=["res://.godot/imported/tex_error16.png-8c65877a212fad933bb93c20678f6cd2.ctex"]
+source_file="res://assets/themes/aero/textures/tex_office16.png"
+dest_files=["res://.godot/imported/tex_office16.png-923041fe82c2e854f7fb3e01a1c47e1b.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://id7inh4dpnu6"
-path="res://.godot/imported/tex_checkbox_checked16.png-b92194d295e1b4eddcce5ab6284ea874.ctex"
+uid="uid://h2c8xp2h8imm"
+path="res://.godot/imported/tex_scroll_arrow_down_highlight.png-4d3f1fcf4f8325faccd9f04f6d57005c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/icons/tex_checkbox_checked16.png"
-dest_files=["res://.godot/imported/tex_checkbox_checked16.png-b92194d295e1b4eddcce5ab6284ea874.ctex"]
+source_file="res://assets/themes/aero/textures/tex_scroll_arrow_down_highlight.png"
+dest_files=["res://.godot/imported/tex_scroll_arrow_down_highlight.png-4d3f1fcf4f8325faccd9f04f6d57005c.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

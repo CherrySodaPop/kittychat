@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://belidvcslgt0q"
-path="res://.godot/imported/tex_checkbox_empty_disabled16.png-91e21842e1ed4af1fff123a9d531975a.ctex"
+uid="uid://b12jak4wyalh4"
+path="res://.godot/imported/tex_checkbox_empty16.png-d51c1704d3d187ca73be89007dfbddf2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/icons/tex_checkbox_empty_disabled16.png"
-dest_files=["res://.godot/imported/tex_checkbox_empty_disabled16.png-91e21842e1ed4af1fff123a9d531975a.ctex"]
+source_file="res://assets/themes/aero/textures/tex_checkbox_empty16.png"
+dest_files=["res://.godot/imported/tex_checkbox_empty16.png-d51c1704d3d187ca73be89007dfbddf2.ctex"]
 
 [params]
 

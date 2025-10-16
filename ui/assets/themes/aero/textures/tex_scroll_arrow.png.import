@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://63vwr7jkju35"
-path="res://.godot/imported/tex_wlm16.png-6f615caa2034b876f12fdc40f1ed8599.ctex"
+uid="uid://sajy4t78v0wb"
+path="res://.godot/imported/tex_scroll_arrow.png-5ae3dc23e59a5157dc0b70bea6114a82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/icons/tex_wlm16.png"
-dest_files=["res://.godot/imported/tex_wlm16.png-6f615caa2034b876f12fdc40f1ed8599.ctex"]
+source_file="res://assets/themes/aero/textures/tex_scroll_arrow.png"
+dest_files=["res://.godot/imported/tex_scroll_arrow.png-5ae3dc23e59a5157dc0b70bea6114a82.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
