@@ -4,6 +4,7 @@ __pycache__/
 data/rooms/**
 data/bans.json
 data/users.json
+data_c/**
 
 # Godot-specific ignores
 .godot/

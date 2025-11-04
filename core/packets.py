@@ -23,10 +23,17 @@ P_ID_CONFIRMED: int = 0
 P_CONFIRMED: tuple = (P_ID_CONFIRMED, PACKET_DEF_START)
 
 P_ID_LOGIN: int = 1
-P_LOGIN: tuple = (P_ID_LOGIN, PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING) # username, password hashed
+P_LOGIN: tuple = (P_ID_LOGIN, PACKET_DEF_START +
+    PACKET_DEF_STRING + # username
+    PACKET_DEF_STRING # password hashed
+)
 
 P_ID_REGISTER: int = 2
-P_REGISTER: tuple = (P_ID_REGISTER, PACKET_DEF_START + PACKET_DEF_STRING + PACKET_DEF_STRING + PACKET_DEF_STRING) # username, password hashed, registration password hashed
+P_REGISTER: tuple = (P_ID_REGISTER, PACKET_DEF_START +
+    PACKET_DEF_STRING + # username
+    PACKET_DEF_STRING + # password hashed
+    PACKET_DEF_STRING # registration password hashed
+)
 
 P_ID_SERVER_SHUTDOWN: int = 3
 P_SERVER_SHUTDOWN: tuple = (P_ID_SERVER_SHUTDOWN, PACKET_DEF_START)

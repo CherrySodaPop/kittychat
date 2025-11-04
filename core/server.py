@@ -1,3 +1,4 @@
+import core.common
 import core.wawalog
 import core.packets
 import os
@@ -20,9 +21,6 @@ KC_SERVER_BAD_DATA: str = "Received bad data!"
 KC_SERVER_CONNECTION_STARTED: str = "Client has connected <%s>"
 KC_SERVER_CONNECTION_END: str = "Client disconnected <%s>"
 KC_SERVER_STOPPING: str = "Stopping server..."
-
-KC_VERSION: str = "0.0.1-dev" # both for display and version checking
-
 KC_SERVER_CONSOLE_UNKNOWN_COMMAND:str = "Unknown command <%s>"
 
 SOCKET_LISTEN_TIMEOUT: float = 0.1
@@ -34,19 +32,9 @@ CLIENT_STOP_EVENT: int = 2
 USER_ID_INVALID: int = -1
 CURRENT_ROOM_INVALID: str = ""
 
-DEFAULT_PORT:int = 6666
-DEFAULT_REGISTER_PASS:str = "meow_pleasechangeme_meow"
-DEFAULT_CHUNK_SIZE:int = 256
-DEFAULT_MAX_CONNECTIONS:int = 256
-
-MAX_CHARACTER_LENGTH:int = 18
-
-# room data
-PATH_TO_ROOM = "data/rooms/%s/"
-PATH_TO_ROOM_SETTINGS = "settings.json"
-PATH_TO_ROOM_CHUNKS = "data/rooms/%s/chunks/"
-CHUNK_FILE_EXTENSION = ".meow"
-NO_CHUNK_DATA = ["no_chunk_data"]
+DEFAULT_REGISTER_PASS: str = "meow_pleasechangeme_meow"
+DEFAULT_CHUNK_SIZE: int = 256
+DEFAULT_MAX_CONNECTIONS: int = 256
 
 # server data
 DATA_PATH = "data/"
@@ -54,6 +42,13 @@ SETTINGS_FILE = "settings.json"
 USERS_FILE = "users.json"
 SETTINGS_PATH = DATA_PATH + SETTINGS_FILE
 USERS_PATH = DATA_PATH + USERS_FILE
+
+# room data
+PATH_TO_ROOM = DATA_PATH + "rooms/%s/"
+PATH_TO_ROOM_SETTINGS = "settings.json"
+PATH_TO_ROOM_CHUNKS = PATH_TO_ROOM + "chunks/"
+CHUNK_FILE_EXTENSION = ".meow"
+NO_CHUNK_DATA = ["no_chunk_data"]
 
 class active_client_data:
     def __init__(self) -> None:
@@ -72,7 +67,7 @@ class server:
     def update_settings(self) -> None:
         _info_: dict = {}
         
-        if os.path.isdir(DATA_PATH):
+        if os.path.isfile(DATA_PATH):
             _read_ = open(SETTINGS_PATH, "r")
             _info_ = json.load(_read_)
             _read_.close()
@@ -81,15 +76,15 @@ class server:
         self.settings["account_registration"] = _info_.get("account_registration", False)
         self.settings["account_registration_password"] = _info_.get("account_registration_password", DEFAULT_REGISTER_PASS) # TODO: make it use a random default password
         self.settings["address"] = _info_.get("address", "localhost")
-        self.settings["port"] = _info_.get("port", DEFAULT_PORT) # i did want 666 as a port as a reference to doom and funny satanic number but it requires admin perms for ports that low...
+        self.settings["port"] = _info_.get("port", core.common.DEFAULT_PORT) # i did want 666 as a port as a reference to doom and funny satanic number but it requires admin perms for ports that low...
         self.settings["max_connections"] = _info_.get("max_connections", DEFAULT_MAX_CONNECTIONS)
         self.settings["chunk_size"] = _info_.get("chunk_size", DEFAULT_CHUNK_SIZE)
 
     def save_server_settings(self) -> None:
-        self.save_file("data/", "settings.json", self.settings)
+        core.common.save_file("data/", "settings.json", self.settings)
 
     def start(self) -> None:
-        core.wawalog.log(KC_SERVER_STARTING % KC_VERSION)
+        core.wawalog.log(KC_SERVER_STARTING % core.common.VERSION)
 
         self.update_settings()
 
@@ -113,7 +108,7 @@ class server:
         self.save_server_settings()
         self.save_rooms()
 
-        for i in self.clients:
+        for i in range(len(self.clients)):
             self.disconnect_client(i)
         if self.instance:
             self.instance.close()
@@ -146,7 +141,7 @@ class server:
                 # got one
                 _active_client_data_ = active_client_data()
                 _e_ = threading.Event()
-                _t_ = threading.Thread(target=self.user_thread, args=[_e_, _socket_, _address_, _active_client_data_])
+                _t_ = threading.Thread(target=self.user_thread, args=[_e_, _socket_, _address_, _active_client_data_, len(self.clients)])
                 _t_.start()
                 _client_ = (_socket_, _t_, _e_, _active_client_data_)
                 self.clients.append(_client_)
@@ -155,11 +150,20 @@ class server:
             except:
                 pass
     
-    def user_thread(self, event: threading.Event, socket: socket.socket, address:str, cli_data:active_client_data) -> None:
-        while not event.is_set():
+    def user_thread(self, event: threading.Event, socket: socket.socket, address: str, cli_data: active_client_data, cli_index: int) -> None:
+        lost_connection: bool = False
+        while not event.is_set() and not lost_connection:
             try:
                 # wait for data
                 _message_: bytes = socket.recv(core.packets.PACKET_SIZE_LIMIT)
+
+                # lost connection
+                if _message_ == b'':
+                    lost_connection = True
+                    break
+
+                core.wawalog.log(_message_)
+
                 # get the packet id
                 _id_: int = struct.unpack(packets.PACKET_DEF_START, _message_[0:packets.PACKET_DEF_IDSIZE_BITS])
                 _b_data: bytes = _message_[packets.PACKET_DEF_IDSIZE_BITS:len(_message_)]
@@ -171,11 +175,16 @@ class server:
             except:
                 core.wawalog.log(KC_SERVER_BAD_DATA)
                 # TODO: consider a ban system for sending bad data
+        self.disconnect_client(cli_index)
      
-    def disconnect_client(self, client: tuple) -> None:
-       client[CLIENT_SOCKET].close()
-       client[CLIENT_STOP_EVENT].set()
-       self.clients.remove(client)
+    def disconnect_client(self, cli_index:int) -> None:
+        if cli_index >= len(self.clients): return
+
+        core.wawalog.log(KC_SERVER_CONNECTION_END % self.clients[cli_index][CLIENT_SOCKET])
+
+        self.clients[cli_index][CLIENT_SOCKET].close()
+        self.clients[cli_index][CLIENT_STOP_EVENT].set()
+        self.clients.pop(cli_index)
     
     def send_info(self, socket: socket.socket, data:bytes) -> None:
         if len(info) > core.packets.PACKET_SIZE_LIMIT:
@@ -265,7 +274,7 @@ class server:
     def register_user(self, username: str, password_hashed: str, register_pass_hashed: str) -> bool:
         if self.settings.get("account_registration", False): return
 
-        if (len(username) > MAX_CHARACTER_LENGTH or
+        if (len(username) > core.common.MAX_USERNAME_LENGTH or
             len(password_hashed) != 128 or
             len(register_pass_hashed) != 128):
             return
@@ -280,10 +289,10 @@ class server:
             "password_hashed" : password_hashed,
         }
 
-        self.save_file(DATA_PATH, USERS_FILE, _user_data_)
+        core.common.save_file(DATA_PATH, USERS_FILE, _user_data_)
     
     def are_user_credentials_correct(self, username: str, password_hashed: str) -> bool:
-        if len(username) > MAX_CHARACTER_LENGTH or len(password_hashed) != 128: return False
+        if len(username) > core.common.MAX_USERNAME_LENGTH or len(password_hashed) != 128: return False
 
         _user_data_: dict = self.get_all_user_data()
 
@@ -316,7 +325,7 @@ class server:
             self.save_room_settings()
 
     def save_room_settings(self, room_name: str) -> None:
-        self.save_file(PATH_TO_ROOM % room_name, PATH_TO_ROOM_SETTINGS, self.rooms[room_name]["settings"])
+        core.common.save_file(PATH_TO_ROOM % room_name, PATH_TO_ROOM_SETTINGS, self.rooms[room_name]["settings"])
 
     def get_chunk_data(self, room_name: str, chunk: int) -> array:
         # check active chunk
@@ -346,7 +355,7 @@ class server:
         _chunk_file_name_ = str(self.get_current_chunk_index()) + CHUNK_FILE_EXTENSION
         _chunk_file_path_ = _chunks_path_ + _chunk_file_name_
 
-        self.save_file(_chunks_path_, _chunk_file_path_, self.rooms[room_name]["messages"])
+        core.common.save_file(_chunks_path_, _chunk_file_path_, self.rooms[room_name]["messages"])
         self.rooms[room_name]["messages"] = []
 
     def get_current_chunk_index(self, room_name: str) -> int:
@@ -362,10 +371,3 @@ class server:
             _chunk_index_ += 1
 
         return _chunk_index_
-    
-    def save_file(self, dir:str, file:str, data:dict) -> None:
-        os.makedirs(dir, exist_ok=True)
-
-        _file_ = open(dir + file, "w")
-        _file_.write(json.dumps(data, indent=4))
-        _file_.close()
